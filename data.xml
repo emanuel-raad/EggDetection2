@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>imglab dataset</name>
+<comment>Created by imglab tool.</comment>
+<images>
+  <image file='img/contour.jpg'>
+    <box top='66' left='225' width='432' height='226'/>
+    <box top='219' left='55' width='365' height='194'/>
+    <box top='368' left='64' width='402' height='182'/>
+  </image>
+  <image file='img/test.jpg'>
+    <box top='68' left='212' width='470' height='235'/>
+    <box top='237' left='55' width='363' height='157'/>
+    <box top='374' left='46' width='384' height='194'/>
+  </image>
+</images>
+</dataset>

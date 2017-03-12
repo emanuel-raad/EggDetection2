@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>imglab dataset</name>
+<comment>Created by imglab tool.</comment>
+<images>
+  <image file='img/eggs/20170307_084417.jpg'>
+    <box top='89' left='207' width='78' height='71'/>
+    <box top='197' left='163' width='91' height='68'/>
+  </image>
+  <image file='img/eggs/20170307_084425.jpg'>
+    <box top='205' left='285' width='63' height='55'/>
+    <box top='291' left='249' width='75' height='57'/>
+  </image>
+  <image file='img/eggs/20170307_084436.jpg'>
+    <box top='104' left='254' width='113' height='101'/>
+  </image>
+  <image file='img/eggs/20170307_084440.jpg'>
+    <box top='95' left='266' width='109' height='106'/>
+  </image>
+  <image file='img/eggs/20170307_084443.jpg'>
+    <box top='84' left='242' width='100' height='109'/>
+  </image>
+  <image file='img/eggs/20170307_084458.jpg'>
+    <box top='177' left='275' width='85' height='65'/>
+  </image>
+  <image file='img/eggs/20170307_084504.jpg'>
+    <box top='129' left='264' width='116' height='98'/>
+  </image>
+  <image file='img/eggs/20170307_084513.jpg'>
+    <box top='124' left='312' width='91' height='84'/>
+  </image>
+  <image file='img/eggs/20170307_084517.jpg'>
+    <box top='115' left='255' width='133' height='102'/>
+  </image>
+  <image file='img/eggs/20170307_084522.jpg'>
+    <box top='119' left='303' width='118' height='95'/>
+  </image>
+  <image file='img/eggs/20170307_084529.jpg'>
+    <box top='125' left='278' width='83' height='70'/>
+  </image>
+  <image file='img/eggs2/20170308_211048.jpg'>
+    <box top='82' left='156' width='279' height='220'/>
+  </image>
+  <image file='img/eggs/20170308_211055.jpg'>
+    <box top='17' left='301' width='124' height='106'/>
+    <box top='194' left='116' width='110' height='121'/>
+    <box top='187' left='290' width='116' height='117'/>
+  </image>
+  <image file='img/eggs/20170308_211059.jpg'>
+    <box top='39' left='245' width='90' height='88'/>
+    <box top='161' left='282' width='103' height='90'/>
+    <box top='222' left='185' width='80' height='98'/>
+  </image>
+  <image file='img/eggs/20170308_211104.jpg'>
+    <box top='221' left='189' width='98' height='100'/>
+    <box top='147' left='365' width='93' height='70'/>
+    <box top='221' left='339' width='99' height='97'/>
+  </image>
+  <image file='img/eggs/20170308_211107.jpg'>
+    <box top='117' left='348' width='46' height='38'/>
+    <box top='182' left='296' width='46' height='49'/>
+    <box top='173' left='354' width='48' height='44'/>
+  </image>
+  <image file='img/eggs/20170308_211111.jpg'>
+    <box top='173' left='375' width='34' height='30'/>
+    <box top='224' left='343' width='28' height='36'/>
+    <box top='213' left='384' width='33' height='32'/>
+  </image>
+  <image file='img/eggs/20170308_211148.jpg'>
+    <box top='82' left='238' width='150' height='143'/>
+  </image>
+  <image file='img/eggs/20170308_211151.jpg'>
+    <box top='147' left='201' width='105' height='137'/>
+  </image>
+  <image file='img/eggs/20170308_211156.jpg'>
+    <box top='160' left='173' width='127' height='149'/>
+  </image>
+  <image file='img/eggs/20170308_211200.jpg'>
+    <box top='134' left='218' width='85' height='106'/>
+  </image>
+  <image file='img/eggs/20170308_211203.jpg'>
+    <box top='115' left='254' width='101' height='106'/>
+  </image>
+
+</images>
+</dataset>
