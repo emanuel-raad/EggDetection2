@@ -4,5 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 2.7.6 virtualenv at ~/.virtualenvs/cv" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Claw" />
+    <orderEntry type="module" module-name="Geese" />
   </component>
 </module>
