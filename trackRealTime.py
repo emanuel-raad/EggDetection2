@@ -1,10 +1,9 @@
+import time
+
 import cv2
 import dlib
-import numpy as np
-from Color import randomColor
-import time
-from contourFinding import contourCanny
-from contourFinding import binaryThresholding
+
+from imageprocessing.contourFinding import contourCanny
 
 detector = dlib.simple_object_detector("detector_eggs.svm")
 cv2.namedWindow('window')

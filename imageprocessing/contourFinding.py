@@ -15,6 +15,13 @@ def contourCanny(roi):
 
 	return edges
 
+def filterAreaLow(contours, thresLow):
+	filteredAreas = []
+	for i in contours:
+		if cv2.contourArea(i) >= thresLow:
+			filteredAreas.append(i)
+	return filteredAreas
+
 def binaryThresholding(roi):
 	'''
 	hsv = cv2.cvtColor(roi,cv2.COLOR_BGR2HSV)

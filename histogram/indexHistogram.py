@@ -21,7 +21,6 @@ for imagePath in glob.glob(args["dataset"] + "/*.jpg"):
     k = imagePath[imagePath.rfind("/") + 1:]
     print k
 
-
     image = cv2.imread(imagePath)
     # Calculate histogram
     features = desc.describe(image)

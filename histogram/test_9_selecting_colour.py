@@ -13,16 +13,16 @@ import numpy as np
 def nothing(x):
     pass
 
-cap = cv2.imread('test.jpg',1)
+frame = cv2.imread('./indexImages/snow_goose_1.jpg')
 cv2.namedWindow('image')
 
-cv2.createTrackbar('hueL','image',0,179,nothing)
-cv2.createTrackbar('hueH','image',0,179,nothing)
+cv2.createTrackbar('hueL','image',0,255,nothing)
+cv2.createTrackbar('hueH','image',0,255,nothing)
 
 cv2.createTrackbar('satL','image',0,255,nothing)
 cv2.createTrackbar('satH','image',0,255,nothing)
 
-cv2.createTrackbar('ValL','image',0,100,nothing)
+cv2.createTrackbar('ValL','image',0,255,nothing)
 cv2.createTrackbar('ValH','image',0,255,nothing)
 
 hl=110
@@ -35,12 +35,6 @@ vl=50
 vh=255
 
 while(1):
-
-    # Take each frame
-    
-    # input file name
-    frame = cv2.imread('geese.png',1)
-    
     
 
     # Convert BGR to HSV

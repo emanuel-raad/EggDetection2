@@ -1,10 +1,10 @@
+import time
+
 import cv2
 import dlib
-import numpy as np
-import time
-from Color import randomColor
-from contourFinding import contourCanny
-from contourFinding import binaryThresholding
+
+from imageprocessing.Color import randomColor
+from imageprocessing.contourFinding import contourCanny
 
 start_time = time.time()
 
