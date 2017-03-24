@@ -1,4 +1,5 @@
 import cv2
+import random
 
 def removeColor(image, colorLow, colorHigh):
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -21,3 +22,10 @@ def combineMask(masks):
         combinedMask = cv2.bitwise_or(combinedMask, masks[i+1])
 
     return combinedMask
+
+def randomColor():
+    r = random.randrange(0, 256)
+    g = random.randrange(0, 256)
+    b = random.randrange(0, 256)
+    color = (r, g, b)
+    return color

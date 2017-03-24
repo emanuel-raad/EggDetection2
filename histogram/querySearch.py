@@ -34,7 +34,7 @@ def search(queryImage, mask=None):
     cv2.waitKey(0)
 
 def main():
-    img = cv2.imread("queryImages/canada_goose_1.jpg")
+    img = cv2.imread("./queryImages/canada_goose_1.jpg")
     search(img)
 
 if __name__ == "__main__":
