@@ -34,8 +34,8 @@ options.num_threads = 4
 options.be_verbose = True
 options.epsilon = 0.01
 
-labelsPath = 'eggs.xml'
-detectorName = 'detector_eggs.svm'
+labelsPath = 'colors.xml'
+detectorName = 'detector_colors.svm'
 
 dlib.train_simple_object_detector(labelsPath, detectorName, options)
 

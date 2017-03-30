@@ -3,14 +3,12 @@ import numpy as np
 import random
 
 #Uncomment in case you need to use trackbars to find the canny thresholds
-'''
 def nothing(x):
     pass
 
 cv2.namedWindow('canny')
 cv2.createTrackbar('low', 'canny', 0, 1000, nothing)
 cv2.createTrackbar('high', 'canny', 0, 1000, nothing)
-'''
 
 # Random color for drawing
 def randomColor():
@@ -28,7 +26,7 @@ def filterAreaLow(contours, thresLow):
     return filteredAreas
 
 
-frame = cv2.imread('test.jpg', 1)
+frame = cv2.imread('./histogram/indexImages/blue_goose_1.jpg', 1)
 cv2.namedWindow('frame')
 
 hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -45,20 +43,18 @@ erosion = cv2.erode(res, kernel, iterations=2)
 im = cv2.cvtColor(erosion, cv2.COLOR_BGR2GRAY)
 
 #Uncomment in case you need to use trackbars to find the canny thresholds
-'''
 while True:
-    cv2.imshow('canny', edges)
     l = cv2.getTrackbarPos('low', 'canny')
     h = cv2.getTrackbarPos('high', 'canny')
     edges = cv2.Canny(im, l, h)
+    cv2.imshow('canny', edges)
 
     k = cv2.waitKey(1) & 0xFF
     if k == 27:
         break
-'''
 
 # Use canny edge to find outline after erosion
-edges = cv2.Canny(im, 206, 438)
+# edges = cv2.Canny(im, 206, 438)
 
 # Dilate the lines to join them and form one contour
 kernelDilate = np.ones((5, 5), np.uint8)

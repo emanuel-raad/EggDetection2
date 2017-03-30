@@ -1,7 +1,8 @@
-from imageprocessing.eggDetection import findEgg
-from imageprocessing.timer import Timer
 import cv2
-import numpy as np
+
+from imageprocessing.eggDetection import findEgg
+from utils.timer import Timer
+
 
 class ROI:
     def __init__(self, top, bottom, left, right):
