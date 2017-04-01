@@ -4,10 +4,12 @@ import glob
 import os
 import csv
 import numpy as np
+
 from utils.timer import Timer
 from histogram import querySearch
 from imageprocessing.pixelDistance import distanceBetweenPointsPixel
 from numpy import genfromtxt
+
 timer = Timer()
 
 # Filename of images to search
@@ -71,16 +73,27 @@ fileGreen.close()
 fileBlue.close()
 fileRed.close()
 
-for s in range(len(csvFilePaths)):
-    coords = genfromtxt(csvFilePaths[s], delimiter=',')
-    print species[s]
-    n = len(coords)
-    d = np.zeros((n, n), dtype=object)
-    for i in range(0, n-1):
-        for j in range(1, n):
-            if (j != i):
-                # Calculate distance here
-                d[i][j] = round(distanceBetweenPointsPixel(coords[i][0], coords[i][1], coords[j][0], coords[j][1]), 2)
-    print d
-    print '\n'
+for p in range(len(imagePaths)):
+    frame = cv2.imread(imagePaths[p])
 
+    for s in range(len(csvFilePaths)):
+        coords = genfromtxt(csvFilePaths[s], delimiter=',')
+
+        n = len(coords)
+        d = np.zeros((n, n), dtype=object)
+        for i in range(0, n - 1):
+            for j in range(1, n):
+                if (j != i):
+                    # Calculate distance here
+                    distance = round(distanceBetweenPointsPixel(coords[i][0], coords[i][1], coords[j][0], coords[j][1]), 2)
+                    distanceThreshold = 50 # pixels
+                    if (distance < distanceThreshold):
+                        cv2.line(frame, (int(coords[i][0]), int(coords[i][1])),
+                                 (int(coords[j][0]), int(coords[j][1])), (0, 0, 255), thickness=3)
+
+                    d[i][j] = distance
+
+    timer.log('end')
+    cv2.imshow('frame', frame)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
