@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>imglab dataset</name>
+<comment>Created by imglab tool.</comment>
+<images>
+  <image file='img/colors/20170329_231141.jpg'>
+    <box top='29' left='122' width='29' height='32'/>
+    <box top='113' left='129' width='27' height='31'/>
+    <box top='179' left='129' width='25' height='24'/>
+    <box top='265' left='127' width='20' height='27'/>
+    <box top='272' left='214' width='27' height='31'/>
+    <box top='173' left='221' width='28' height='28'/>
+    <box top='109' left='221' width='27' height='27'/>
+    <box top='32' left='223' width='27' height='31'/>
+    <box top='32' left='326' width='27' height='31'/>
+    <box top='97' left='326' width='26' height='32'/>
+    <box top='175' left='328' width='29' height='29'/>
+    <box top='270' left='326' width='30' height='30'/>
+    <box top='276' left='442' width='28' height='30'/>
+    <box top='102' left='430' width='29' height='24'/>
+    <box top='171' left='431' width='27' height='37'/>
+    <box top='31' left='429' width='29' height='32'/>
+  </image>
+  <image file='img/colors/20170329_231144.jpg'>
+    <box top='66' left='124' width='50' height='42'/>
+    <box top='234' left='128' width='45' height='49'/>
+    <box top='63' left='305' width='52' height='47'/>
+    <box top='240' left='320' width='54' height='46'/>
+  </image>
+  <image file='img/colors/20170329_231152.jpg'>
+    <box top='57' left='129' width='55' height='46'/>
+    <box top='217' left='140' width='41' height='47'/>
+    <box top='226' left='312' width='51' height='60'/>
+    <box top='48' left='305' width='45' height='45'/>
+    <box top='30' left='507' width='64' height='48'/>
+    <box top='212' left='519' width='64' height='51'/>
+  </image>
+  <image file='img/colors/20170329_231200.jpg'>
+    <box top='33' left='105' width='47' height='36'/>
+    <box top='34' left='242' width='44' height='42'/>
+    <box top='26' left='396' width='37' height='44'/>
+    <box top='23' left='548' width='36' height='41'/>
+    <box top='124' left='547' width='39' height='36'/>
+    <box top='129' left='403' width='36' height='33'/>
+    <box top='143' left='253' width='39' height='33'/>
+    <box top='148' left='123' width='35' height='35'/>
+    <box top='237' left='120' width='45' height='38'/>
+    <box top='235' left='249' width='35' height='37'/>
+    <box top='233' left='403' width='45' height='35'/>
+    <box top='229' left='555' width='44' height='43'/>
+  </image>
+</images>
+</dataset>
