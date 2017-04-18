@@ -83,7 +83,7 @@ def findEggDebug(img):
 def main():
 
     # timer = Timer()
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     detector = cv2.SimpleBlobDetector_create(initDetectorParams())
 
     while True:
@@ -110,17 +110,17 @@ def main():
 
             # Difference between the detection and the center, in pixels
             diffX = xShort - center_x
-            diffY = yShort - center_y
+            diffY = -1 * (yShort - center_y) # Negative because the pixel coords increase downwards
 
             # Difference between the detection and the center, in centimeters
             # x: + up (egg is up relative to the center), - down
             # y: + right, - left
-            altitude = 40
+            altitude = 103.0
             offsetX = distanceToRealWorld(altitude, diffX, center_x)
             offsetY = distanceToRealWorld(altitude, diffY, center_y)
             diffR = math.sqrt(offsetX**2 + offsetY**2)
 
-            # print "offsetX: {}     offsetY: {}      diff:{}".format(offsetX, offsetY, diffR)
+            print "offsetX: {}     offsetY: {}      diff:{}".format(offsetX, offsetY, diffR)
 
             # Draw centroids
             for k in keypoints:

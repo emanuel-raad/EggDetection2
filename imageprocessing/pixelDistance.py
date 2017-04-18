@@ -1,7 +1,7 @@
 import math
 
 #Logitech C920 Pro. 16:9 aspect ratio. Degrees
-C920_DFOV_169 = 78
+C920_DFOV_169 = 78.0
 
 def distanceBetweenPointsPixel(x1, y1, x2, y2):
     return math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2))
@@ -23,10 +23,13 @@ def distanceBetweenPointsGPS(lat1, lon1, lat2, lon2):
 
     return d
 
-def distanceToRealWorld(altitude, distancePixel, halfWidth, camera = 'C920'):
+def distanceToRealWorld(altitude, distancePixel, halfWidth, camera = 'C910'):
     if camera == 'C920':
         dfov = C920_DFOV_169
-        aspect_ratio = 9/16
+        aspect_ratio = 9.0/16.0
+    elif camera == 'C910':
+        dfov = 83.0
+        aspect_ratio = 3.0/4.0
     else:
         dfov = 80
         aspect_ratio = 9/16
@@ -34,8 +37,11 @@ def distanceToRealWorld(altitude, distancePixel, halfWidth, camera = 'C920'):
     dx = altitude
     dh = dx / math.cos(math.radians((dfov/2)))
     dy = dh * math.sin(math.radians(dfov/2))
-    alpha = math.atan(math.radians(aspect_ratio))
+    alpha = math.atan(aspect_ratio)
     cx = dy * math.cos(alpha)
+    cy = dy * math.sin(alpha)
+    print "cx: {}".format(cx)
+    print "cy: {}".format(cy)
     pixelRealRatio = cx/halfWidth
     distanceReal = distancePixel * pixelRealRatio
 
