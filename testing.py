@@ -3,7 +3,7 @@ import numpy as np
 from imageprocessing.contourFinding import filterAreaLow
 from imageprocessing.Color import randomColor
 
-img = cv2.imread("./histogram/indexImages/snow_goose_1.jpg")
+img = cv2.imread("./histogram/indexImages/snow_1.jpg")
 img = cv2.GaussianBlur(img, (3, 3), 0)
 
 v = np.median(img)

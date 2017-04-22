@@ -8,7 +8,7 @@ cv2.namedWindow(HSV_WINDOW)
 
 queue = Queue.Queue(maxsize=5)
 
-imgPath = './histogram/indexImages/blue_goose_1.jpg'
+imgPath = './histogram/indexImages/blue_1.jpg'
 original = cv2.imread(imgPath)
 s = HSVTrackbar(queue, HSV_WINDOW, original)
 

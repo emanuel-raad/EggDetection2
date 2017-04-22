@@ -26,7 +26,7 @@ def filterAreaLow(contours, thresLow):
     return filteredAreas
 
 
-frame = cv2.imread('./histogram/indexImages/blue_goose_1.jpg', 1)
+frame = cv2.imread('./histogram/indexImages/blue_1.jpg', 1)
 cv2.namedWindow('frame')
 
 hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)

@@ -1,3 +1,4 @@
+import argparse
 import cv2
 import dlib
 import glob
@@ -10,28 +11,42 @@ from histogram import querySearch
 from imageprocessing.pixelDistance import distanceBetweenPointsPixel
 from numpy import genfromtxt
 
+ap = argparse.ArgumentParser()
+ap.add_argument("-d", "--detector", required = True,
+	help = "Path to where the detector is stored")
+ap.add_argument("-q", "--queryImages", required = True,
+	help = "Path to image to search through")
+ap.add_argument("-i", "--histogramIndex", required = True,
+	help = "Path to the histogram index")
+ap.add_argument("-r", "--pathROI", required = True,
+	help = "Path to store the detections")
+args = vars(ap.parse_args())
+
 timer = Timer()
 
 # Filename of images to search
-path = './img/colors/query/*'
+path = args["queryImages"]
 imagePaths = glob.glob(path)
 imageNames = [os.path.basename(x) for x in imagePaths]
 print imageNames
 
-csvFilePaths = ['./img/colors/csv/locations_green.csv',
+csvFilePaths = ['./img/colors/csv/locations_canada.csv',
                 './img/colors/csv/locations_blue.csv',
-                './img/colors/csv/locations_red.csv']
-species = ['green', 'blue', 'red']
+                './img/colors/csv/locations_snow.csv']
+species = ['canada', 'blue', 'snow']
 
-fileGreen = open(csvFilePaths[0], 'wb')
+fileCanada = open(csvFilePaths[0], 'wb')
 fileBlue = open(csvFilePaths[1], 'wb')
-fileRed = open(csvFilePaths[2], 'wb')
-writerGreen = csv.writer(fileGreen)
+fileSnow = open(csvFilePaths[2], 'wb')
+writerCanada = csv.writer(fileCanada)
 writerBlue = csv.writer(fileBlue)
-writerRed = csv.writer(fileRed)
+writerSnow = csv.writer(fileSnow)
 
-pathToDetector = 'detector_colors.svm'
+pathToDetector = args["detector"]
 detector = dlib.simple_object_detector(pathToDetector)
+
+pathToHistogramIndex = args["histogramIndex"]
+pathToROI = args["pathROI"]
 green = (0, 255, 0)
 
 for p in range(len(imagePaths)):
@@ -51,28 +66,29 @@ for p in range(len(imagePaths)):
             # from d.center() get the GPS position of the goose
 
             # Test ROI to see what goose species it is
-            species = querySearch.search(roi, './histogram/histogramIndexColors')
+            species = querySearch.search(roi, pathToHistogramIndex)
             species = species[0:species.find('_')]
-            # print species
+            print species
 
             # rowToWrite = [d.center().x, d.center().y, species]
             # writer.writerow(rowToWrite)
-            if species == 'green':
-                writerGreen.writerow([d.center().x, d.center().y])
+            if species == 'canada':
+                writerCanada.writerow([d.center().x, d.center().y])
             elif species == 'blue':
                 writerBlue.writerow([d.center().x, d.center().y])
-            elif species == 'red':
-                writerRed.writerow([d.center().x, d.center().y])
+            elif species == 'snow':
+                writerSnow.writerow([d.center().x, d.center().y])
             else:
                 print "oops"
 
-            roiPath = './img/colors/roi/' + species + '_' + imageNames[p] + '_' + str(i) + '.jpg'
+            roiPath = pathToROI + '/' + species + '_' + imageNames[p] + '_' + str(i) + '.jpg'
             cv2.imwrite(roiPath, roi)
 
-fileGreen.close()
+fileCanada.close()
 fileBlue.close()
-fileRed.close()
+fileSnow.close()
 
+"""
 for p in range(len(imagePaths)):
     frame = cv2.imread(imagePaths[p])
 
@@ -97,3 +113,4 @@ for p in range(len(imagePaths)):
     cv2.imshow('frame', frame)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+"""

@@ -13,7 +13,7 @@ import numpy as np
 def nothing(x):
     pass
 
-frame = cv2.imread('./indexImages/snow_goose_1.jpg')
+frame = cv2.imread('./indexImages/snow_1.jpg')
 cv2.namedWindow('image')
 
 cv2.createTrackbar('hueL','image',0,255,nothing)

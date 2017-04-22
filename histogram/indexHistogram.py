@@ -20,6 +20,7 @@ for imagePath in glob.glob(args["dataset"] + "/*.jpg"):
     # Key for each entry. Just the filename
     k = imagePath[imagePath.rfind("/") + 1:]
     print k
+    print imagePath
 
     image = cv2.imread(imagePath)
     # Calculate histogram

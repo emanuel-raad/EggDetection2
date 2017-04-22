@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-img = cv2.imread('./histogram/indexImages/blue_goose_1.jpg',0)
+img = cv2.imread('./histogram/indexImages/blue_1.jpg',0)
 
 # Initiate STAR detector
 orb = cv2.ORB_create()
