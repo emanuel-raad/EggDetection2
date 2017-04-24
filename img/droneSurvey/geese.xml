@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>imglab dataset</name>
+<comment>Created by imglab tool.</comment>
+<images>
+  <image file='train/blue_1.jpg'>
+    <box top='64' left='83' width='523' height='416'/>
+  </image>
+  <image file='train/canada_1.jpg'>
+    <box top='20' left='49' width='157' height='193'/>
+  </image>
+  <image file='train/snow_1.jpg'>
+    <box top='42' left='36' width='308' height='265'/>
+  </image>
+</images>
+</dataset>

@@ -5,10 +5,12 @@ import glob
 import os
 import csv
 import numpy as np
+import uuid
 
 from utils.timer import Timer
 from histogram import querySearch
-from imageprocessing.pixelDistance import distanceBetweenPointsPixel
+from imageprocessing.distances import distanceBetweenPointsPixel, addLatitude, addLongitude
+from sensors.camera import Camera
 from numpy import genfromtxt
 
 ap = argparse.ArgumentParser()
@@ -20,6 +22,8 @@ ap.add_argument("-i", "--histogramIndex", required = True,
 	help = "Path to the histogram index")
 ap.add_argument("-r", "--pathROI", required = True,
 	help = "Path to store the detections")
+ap.add_argument("-s", "--pathCSV", required = True,
+    help = "Path where the resulting locations will be stored")
 args = vars(ap.parse_args())
 
 timer = Timer()
@@ -30,10 +34,15 @@ imagePaths = glob.glob(path)
 imageNames = [os.path.basename(x) for x in imagePaths]
 print imageNames
 
-csvFilePaths = ['./img/colors/csv/locations_canada.csv',
-                './img/colors/csv/locations_blue.csv',
-                './img/colors/csv/locations_snow.csv']
-species = ['canada', 'blue', 'snow']
+category = ['canada', 'blue', 'snow']
+
+# category = ['red' , 'blue', 'green']
+
+pathCSV = args["pathCSV"]
+csvFilePaths = [pathCSV + '/canada.csv',
+                pathCSV + '/blue.csv',
+                pathCSV + '/snow.csv']
+
 
 fileCanada = open(csvFilePaths[0], 'wb')
 fileBlue = open(csvFilePaths[1], 'wb')
@@ -72,45 +81,73 @@ for p in range(len(imagePaths)):
 
             # rowToWrite = [d.center().x, d.center().y, species]
             # writer.writerow(rowToWrite)
-            if species == 'canada':
-                writerCanada.writerow([d.center().x, d.center().y])
-            elif species == 'blue':
-                writerBlue.writerow([d.center().x, d.center().y])
-            elif species == 'snow':
-                writerSnow.writerow([d.center().x, d.center().y])
+            row = [imagePaths[p], d.center().x, d.center().y]
+            if species == category[0]:
+                writerCanada.writerow(row)
+            elif species == category[1]:
+                writerBlue.writerow(row)
+            elif species == category[2]:
+                writerSnow.writerow(row)
             else:
                 print "oops"
 
-            roiPath = pathToROI + '/' + species + '_' + imageNames[p] + '_' + str(i) + '.jpg'
+            filenameUUID = str(uuid.uuid4())
+            roiPath = pathToROI + '/' + species + '_' + filenameUUID + '.jpg'
             cv2.imwrite(roiPath, roi)
 
 fileCanada.close()
 fileBlue.close()
 fileSnow.close()
 
-"""
+
+camera = Camera()
+frameCenterX = 640.0/2
+frameCenterY = 480.0/2
+
+# Loop through each picture
 for p in range(len(imagePaths)):
     frame = cv2.imread(imagePaths[p])
+    print imagePaths[p]
 
+    # Loop through each species
     for s in range(len(csvFilePaths)):
-        coords = genfromtxt(csvFilePaths[s], delimiter=',')
-
-        n = len(coords)
+        # print csvFilePaths[s]
+        coords = genfromtxt(csvFilePaths[s], delimiter=',', dtype=[np.dtype(object), np.dtype(int), np.dtype(int)])
+        # print coords
+        n = coords.size
+        # print n
         d = np.zeros((n, n), dtype=object)
-        for i in range(0, n - 1):
-            for j in range(1, n):
-                if (j != i):
-                    # Calculate distance here
-                    distance = round(distanceBetweenPointsPixel(coords[i][0], coords[i][1], coords[j][0], coords[j][1]), 2)
-                    distanceThreshold = 50 # pixels
-                    if (distance < distanceThreshold):
-                        cv2.line(frame, (int(coords[i][0]), int(coords[i][1])),
-                                 (int(coords[j][0]), int(coords[j][1])), (0, 0, 255), thickness=3)
 
-                    d[i][j] = distance
+        if n > 0:
+            for i in range(0, n - 1):
+                for j in range(1, n):
+                    # print "Coords for {}".format(coords[i][0])
+                    if (j != i) and (coords[i][0] == imagePaths[p]) and (coords[j][0] == imagePaths[p]):
+                        # print "Match!"
+                        indexPixelX = 1
+                        indexPixelY = 2
+                        # Calculate distance here
+                        distance = round(distanceBetweenPointsPixel(
+                            coords[i][indexPixelX], coords[i][indexPixelY], coords[j][indexPixelX], coords[j][indexPixelY]), 2)
+                        distanceThreshold = 50 # pixels
+
+                        # 300 cm
+                        # distanceThreshold = camera.getRealWorldToPixel(ultrasonic.getAltitude(), 300.0)
+                        if (distance < distanceThreshold):
+                            cv2.line(frame, (coords[i][indexPixelX], coords[i][indexPixelY]),
+                                     (coords[j][indexPixelX], coords[j][indexPixelY]), (0, 0, 255), thickness=3)
+                            '''
+                            nestCenterX = (coords[i][indexPixelX] - coords[j][indexPixelX]) / 2.0
+                            nestCenterY = (coords[i][indexPixelY] - coords[j][indexPixelY]) / 2.0
+                            dx = nestCenterX - frameCenterX
+                            dy = nestCenterY - frameCenterY
+                            newLatitude = addLatitude(latitude, dy)
+                            newLongitude = addLongitude(longitude, latitude, dx)
+                            '''
+
+                        d[i][j] = distance
 
     timer.log('end')
-    cv2.imshow('frame', frame)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-"""
+    # cv2.imshow('frame', frame)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()

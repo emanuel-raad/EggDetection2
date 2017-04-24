@@ -2,7 +2,7 @@ import numpy
 import math
 import matplotlib.pyplot as plt
 
-from pixelDistance import distanceBetweenPointsPixel
+from distances import distanceBetweenPointsPixel
 from random import randint
 
 def ripleyKFunction(n, coords, area, startD, stopD, incrementD, ripleyMode = 'ripleysK'):

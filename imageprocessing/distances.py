@@ -23,16 +23,19 @@ def distanceBetweenPointsGPS(lat1, lon1, lat2, lon2):
 
     return d
 
-def distanceToRealWorld(altitude, distancePixel, halfWidth, camera = 'C910'):
+def distanceToRealWorld(altitude, distancePixel, halfWidthPixel, camera = 'C920_169'):
     if camera == 'C920':
         dfov = C920_DFOV_169
         aspect_ratio = 9.0/16.0
     elif camera == 'C910':
         dfov = 83.0
         aspect_ratio = 3.0/4.0
+    elif camera == 'C920_169':
+        dfov = 78.0
+        aspect_ratio = 3.0/4.0
     else:
-        dfov = 80
-        aspect_ratio = 9/16
+        dfov = 80.0
+        aspect_ratio = 9.0/16.0
 
     dx = altitude
     dh = dx / math.cos(math.radians((dfov/2)))
@@ -42,7 +45,14 @@ def distanceToRealWorld(altitude, distancePixel, halfWidth, camera = 'C910'):
     cy = dy * math.sin(alpha)
     print "cx: {}".format(cx)
     print "cy: {}".format(cy)
-    pixelRealRatio = cx/halfWidth
+    pixelRealRatio = cx/halfWidthPixel
     distanceReal = distancePixel * pixelRealRatio
 
     return distanceReal
+
+r_earth = 6378000.0 # meters
+def addLatitude(latitude, dy):
+    return latitude  + (dy / r_earth) * (180.0 / math.pi)
+
+def addLongitude(longitude, latitude, dx):
+    return longitude + (dx / r_earth) * (180.0 / math.pi) / math.cos(latitude * math.pi/180.0)
