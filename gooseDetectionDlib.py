@@ -12,6 +12,10 @@ from histogram import querySearch
 from imageprocessing.distances import distanceBetweenPointsPixel, addLatitude, addLongitude
 from sensors.camera import Camera
 from numpy import genfromtxt
+from imageprocessing.Color import randomColor
+
+altitude = 300.0
+csvImageGPSFilepath = './image_gps.csv'
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--detector", required = True,
@@ -34,15 +38,14 @@ imagePaths = glob.glob(path)
 imageNames = [os.path.basename(x) for x in imagePaths]
 print imageNames
 
-category = ['canada', 'blue', 'snow']
-
-# category = ['red' , 'blue', 'green']
+# category = ['canada', 'blue', 'snow']
+category = ['red' , 'blue', 'green']
 
 pathCSV = args["pathCSV"]
 csvFilePaths = [pathCSV + '/canada.csv',
                 pathCSV + '/blue.csv',
                 pathCSV + '/snow.csv']
-
+csvNestFilePath = pathCSV + '/nest.csv'
 
 fileCanada = open(csvFilePaths[0], 'wb')
 fileBlue = open(csvFilePaths[1], 'wb')
@@ -99,15 +102,31 @@ fileCanada.close()
 fileBlue.close()
 fileSnow.close()
 
-
 camera = Camera()
 frameCenterX = 640.0/2
 frameCenterY = 480.0/2
+
+nestCSV = open(csvNestFilePath, 'w')
+nestWriter = csv.writer(nestCSV)
 
 # Loop through each picture
 for p in range(len(imagePaths)):
     frame = cv2.imread(imagePaths[p])
     print imagePaths[p]
+
+    csvImageGPS = open(csvImageGPSFilepath, 'r')
+    reader = csv.reader(csvImageGPS, delimiter=',')
+
+    latitude = 0
+    longitude = 0
+
+    for row in reader:
+        if imagePaths[p] == row[0]:
+            latitude = row[1]
+            longitude = row[2]
+            print latitude
+            print longitude
+            break
 
     # Loop through each species
     for s in range(len(csvFilePaths)):
@@ -126,16 +145,24 @@ for p in range(len(imagePaths)):
                         # print "Match!"
                         indexPixelX = 1
                         indexPixelY = 2
-                        # Calculate distance here
-                        distance = round(distanceBetweenPointsPixel(
-                            coords[i][indexPixelX], coords[i][indexPixelY], coords[j][indexPixelX], coords[j][indexPixelY]), 2)
-                        distanceThreshold = 50 # pixels
 
-                        # 300 cm
-                        # distanceThreshold = camera.getRealWorldToPixel(ultrasonic.getAltitude(), 300.0)
-                        if (distance < distanceThreshold):
+                        # Calculate distance here
+                        distancePixel = round(distanceBetweenPointsPixel(
+                            coords[i][indexPixelX], coords[i][indexPixelY], coords[j][indexPixelX], coords[j][indexPixelY]), 2)
+
+                        # The second parameter is 300 cm since the geese were specified to be within 3m of each other
+                        # to count as a nest. distanceThreshold represents the length in pixels that 3m would
+                        # appear at a certain altitude.
+                        distanceThreshold = camera.getRealWorldToPixel(altitude, 300.0)
+                        distanceThreshold = 50
+
+                        # Nest has been found
+                        if (distancePixel < distanceThreshold):
                             cv2.line(frame, (coords[i][indexPixelX], coords[i][indexPixelY]),
-                                     (coords[j][indexPixelX], coords[j][indexPixelY]), (0, 0, 255), thickness=3)
+                                     (coords[j][indexPixelX], coords[j][indexPixelY]), randomColor(), thickness=3)
+
+                            # The difference in GPS position is really negligible, so it may just be better to take the
+                            # gps position of the drone.
                             '''
                             nestCenterX = (coords[i][indexPixelX] - coords[j][indexPixelX]) / 2.0
                             nestCenterY = (coords[i][indexPixelY] - coords[j][indexPixelY]) / 2.0
@@ -144,10 +171,15 @@ for p in range(len(imagePaths)):
                             newLatitude = addLatitude(latitude, dy)
                             newLongitude = addLongitude(longitude, latitude, dx)
                             '''
+                            species = category[s]
+                            row1 = [imagePaths[p], species, latitude, longitude]
+                            nestWriter.writerow(row1)
 
-                        d[i][j] = distance
+                        d[i][j] = distancePixel
 
     timer.log('end')
-    # cv2.imshow('frame', frame)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    cv2.imshow('frame', frame)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+nestCSV.close()

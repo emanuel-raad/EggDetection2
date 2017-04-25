@@ -30,7 +30,7 @@ with np.load('./matrixCalibration.npz') as data:
         if once:
             print "Height: {}\nWidth: {}".format(h, w)
             camera = Camera(w, h, 65.0)
-            altitude = 102.0
+            altitude = 300.0
             print "Full x length: {:.2f} cm".format(2 * camera.getCx(altitude))
             print "Full y length: {:.2f} cm".format(2 * camera.getCy(altitude))
             once = False
